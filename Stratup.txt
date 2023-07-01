@@ -1,0 +1,24 @@
+#!bin/bash
+sudo su -
+sudo apt update
+sudo apt-get -y install unzip
+sudo apt install -y jq
+sudo apt install -y json
+
+#Kops Installion V1.21.1
+wget https://github.com/kubernetes/kops/releases/download/v1.21.1/kops-linux-amd64
+mv kops-linux-amd64 kops
+chmod 777 kops
+mv kops /usr/local/bin/
+
+#Kubctl installion V1.22.0
+apt-get install update
+apt-get install curl
+curl -LO "https://dl.k8s.io/v1.22.0/bin/windows/amd64/kubectl.exe.sha256"
+mv kubectl.exe.sha256 kubectl
+chmod 777 kubectl
+mv kubectl /usr/local/bin/
+
+#Generate SSH-Keys
+ssh-keygen
+

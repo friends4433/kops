@@ -2,3 +2,5 @@
 terrafrom.tfstate
 Terraform/
 .terraform/
+terraform.tfstate.backup
+terraform.tfstate
