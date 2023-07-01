@@ -15,10 +15,35 @@ mv kops /usr/local/bin/
 apt-get install update
 apt-get install curl
 curl -LO "https://dl.k8s.io/v1.22.0/bin/windows/amd64/kubectl.exe.sha256"
-mv kubectl.exe.sha256 kubectl
+#curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+#mv kubectl.exe.sha256 kubectl
 chmod 777 kubectl
 mv kubectl /usr/local/bin/
 
 #Generate SSH-Keys
 ssh-keygen
+
+#Export 
+echo 'export NAME=rbpatnam.live' >> ~/.bashrc
+echo 'export KOPS_STATE_STORE=s3://rbpatnam.live' >> ~/.bashrc
+echo 'export AWS_REGION=us-east-1' >> ~/.bashrc
+echo 'export CLUSTER_NAME=rbpatnam.live' >> ~/.bashrc
+echo 'export EDITOR='/usr/bin/nano''>> ~/.bashrc
+echo 'export K8S_VERSION=1.21.1' >>~/.bashrc
+
+
+#Alias create
+echo 'source <(kubectl completion bash)' >>~/.bashrc
+echo 'alias ku=kubectl' >>~/.bashrc
+echo 'complete -o default -F __start_kubectl ku' >>~/.bashrc
+source ~/.bashrc
+
+#kops 3nods-cluster
+touch /usr/local/bin/3node-3cluster.sh
+echo 'kops create cluster --name=rbpatnam.live \
+--state=s3://rbpatnam.live --zones=us-east-1a,us-east-1b,us-east-1c \
+--node-count=3 --master-count=3 --node-size=t2.micro --master-size=t2.micro \
+--master-zones=us-east-1a,us-east-1b,us-east-1c --master-volume-size 10 --node-volume-size 10 \
+--dns-zone=rbpatnam.live --yes' >> /usr/local/bin/3node-3cluster.sh
+
 
